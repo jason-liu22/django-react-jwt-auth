@@ -2,9 +2,11 @@ from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.tokens import RefreshToken
 from jwt_auth.serializers import UserSerializer
 from jwt_auth.models import User
 
@@ -40,3 +42,17 @@ class CustomizedTokenObtainPairView(TokenObtainPairView):
         serializer.validated_data.update(user_serializer.data)
 
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
+
+
+class LogoutView(APIView):
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            print(refresh_token)
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            raise e
+            # return Response(status=status.HTTP_400_BAD_REQUEST)
