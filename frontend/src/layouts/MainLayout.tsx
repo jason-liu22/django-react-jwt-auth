@@ -9,7 +9,10 @@ import useAuth from "hooks/useAuth";
 const navigation = [FULL_PATH.home, FULL_PATH.dashboard];
 
 export default function MainLayout() {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
+  const onLogout = async () => {
+    await logout();
+  };
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -101,29 +104,17 @@ export default function MainLayout() {
                                     "block px-4 py-2 text-sm text-gray-700"
                                   )}
                                 >
-                                  Your Profile
-                                </Link>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <Link
-                                  to="#"
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
-                                  )}
-                                >
-                                  Settings
+                                  Profile
                                 </Link>
                               )}
                             </Menu.Item>
                             <Menu.Item>
                               {({ active }) => (
                                 <button
+                                  onClick={onLogout}
                                   className={classNames(
                                     active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                    "block px-4 py-2 text-sm text-gray-700 w-full text-left"
                                   )}
                                 >
                                   Sign out

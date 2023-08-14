@@ -1,14 +1,17 @@
 import { createContext, useEffect, useReducer } from "react";
 import type { ReactNode } from "react";
+import { FULL_PATH } from "routes/paths";
 
 import axiosInstance from "utils/axios";
-import { setSession } from "utils/jwt";
+import { setAccessToken, setRefreshToken, setSession } from "utils/jwt";
 
 type User = {
-  accessToken: string;
-  refreshToken: string;
+  access: string;
+  refresh: string;
   username: string;
   email: string;
+  first_name: string;
+  last_name: string;
 };
 
 enum AuthActionKind {
@@ -73,7 +76,8 @@ const JWTAuthContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   login: (email: string, password: string) => Promise.resolve(),
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  register: (first_name:string, last_name:string, email: string, password: string) => Promise.resolve(),
+  register: (username: string, email: string, password: string) =>
+    Promise.resolve(),
   logout: () => Promise.resolve(),
 });
 
@@ -83,11 +87,11 @@ function JWTAuthContextProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const accessToken = window.localStorage.getItem("accessToken");
-        if (accessToken) {
+        const access = window.localStorage.getItem("access");
+        if (access) {
           // set authorization header on axios
-          setSession(accessToken);
-          const response = await axiosInstance.get<User>("/api/users/me");
+          setSession(access);
+          const response = await axiosInstance.get<User>("/users/me/");
           dispatch({
             type: AuthActionKind.INITIALIZE,
             payload: {
@@ -120,11 +124,13 @@ function JWTAuthContextProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axiosInstance.post<User>("/api/login", {
+      const response = await axiosInstance.post<User>("/auth/login/", {
         email,
         password,
       });
-      setSession(response.data.accessToken);
+      setAccessToken(response.data.access);
+      setRefreshToken(response.data.refresh);
+      setSession(response.data.access);
       dispatch({
         type: AuthActionKind.LOGIN,
         payload: {
@@ -136,21 +142,18 @@ function JWTAuthContextProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const register = async (first_name:string, last_name:string, email: string, password: string) => {
+  const register = async (
+    username: string,
+    email: string,
+    password: string
+  ) => {
     try {
-      const response = await axiosInstance.post<User>("/api/register", {
-        first_name,
-        last_name,
+      await axiosInstance.post<User>("/auth/register/", {
+        username,
         email,
         password,
       });
-      setSession(response.data.accessToken);
-      dispatch({
-        type: AuthActionKind.LOGIN,
-        payload: {
-          user: response.data,
-        },
-      });
+      window.location.href = FULL_PATH.login.href;
     } catch (error) {
       console.error(error);
     }

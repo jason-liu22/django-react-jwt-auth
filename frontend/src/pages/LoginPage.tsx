@@ -8,7 +8,7 @@ export default function LoginPage() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("eamil") as string;
+    const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     if (email && password) {
       await login(email, password);

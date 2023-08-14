@@ -2,13 +2,25 @@ import axios from "./axios";
 
 const setSession = (accessToken: string | null) => {
   if (accessToken) {
-    localStorage.setItem("accessToken", accessToken);
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem("accessToken");
     delete axios.defaults.headers.common.Authorization;
-    delete axios.defaults.headers.common.UserType;
   }
 };
 
-export { setSession };
+const setAccessToken = (accessToken: string | null) => {
+  if (accessToken) {
+    localStorage.setItem("access", accessToken);
+  } else {
+    localStorage.removeItem("access");
+  }
+};
+
+const setRefreshToken = (refreshToken: string | null) => {
+  if (refreshToken) {
+    localStorage.setItem("refresh", refreshToken);
+  } else {
+    localStorage.removeItem("refresh");
+  }
+};
+export { setSession, setAccessToken, setRefreshToken };

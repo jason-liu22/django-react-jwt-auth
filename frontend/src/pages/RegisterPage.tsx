@@ -8,13 +8,12 @@ export default function RegisterPage() {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const first_name = formData.get("first_name") as string;
-    const last_name = formData.get("last_name") as string;
-    const email = formData.get("eamil") as string;
+    const username = formData.get("username") as string;
+    const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const confirm_password = formData.get("confirm_password") as string;
     if (password === confirm_password) {
-      await register(first_name, last_name, email, password);
+      await register(username, email, password);
     }
   };
   return (
@@ -37,33 +36,15 @@ export default function RegisterPage() {
               htmlFor="first_name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              First Name
+              Username
             </label>
             <div className="mt-2">
               <input
                 required
-                id="first_name"
-                name="first_name"
+                id="username"
+                name="username"
                 type="text"
-                autoComplete="first_name"
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <label
-              htmlFor="last_name"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Last Name
-            </label>
-            <div className="mt-2">
-              <input
-                required
-                id="last_name"
-                name="last_name"
-                type="text"
-                autoComplete="last_name"
+                autoComplete="username"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
