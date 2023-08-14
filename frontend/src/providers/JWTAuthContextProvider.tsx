@@ -160,9 +160,12 @@ function JWTAuthContextProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    const refreshToken = window.localStorage.getItem("refresh");
     try {
-      await axiosInstance.get("/api/logout");
+      await axiosInstance.post("/auth/logout/", { refresh: refreshToken });
       setSession(null);
+      setAccessToken(null);
+      setRefreshToken(null);
       dispatch({ type: AuthActionKind.LOGOUT, payload: {} });
     } catch (error) {
       console.error(error);
