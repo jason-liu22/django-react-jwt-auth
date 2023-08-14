@@ -71,15 +71,13 @@ function authReducer(state: AuthState, action: AuthAction): AuthState {
   }
 }
 
-const JWTAuthContext = createContext({
-  ...initialState,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  login: (email: string, password: string) => Promise.resolve(),
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  register: (username: string, email: string, password: string) =>
-    Promise.resolve(),
-  logout: () => Promise.resolve(),
-});
+export type AuthContextType = AuthState & {
+  login: (email: string, password: string) => void;
+  register: (username: string, email: string, password: string) => void;
+  logout: () => void;
+};
+
+const JWTAuthContext = createContext<AuthContextType | null>(null);
 
 function JWTAuthContextProvider({ children }: { children: ReactNode }) {
   const [authState, dispatch] = useReducer(authReducer, initialState);
