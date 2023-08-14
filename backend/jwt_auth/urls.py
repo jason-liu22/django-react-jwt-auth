@@ -10,8 +10,8 @@ user_detail = UserViewSet.as_view(
 user_register = UserViewSet.as_view({"post": "register"}, permission_classes=[AllowAny])
 
 urlpatterns = [
-    path("users/<int:pk>/", user_detail, name="user-detail"),
-    path("auth/register/", user_register, name="user-register"),
     path("auth/login/", TokenObtainPairView.as_view(), name="user-login"),
+    path("auth/register/", user_register, name="user-register"),
     path("auth/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("users/me/", user_detail, name="user-detail"),
 ]
