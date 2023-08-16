@@ -1,13 +1,29 @@
-# React + TypeScript + Vite
+# React JWT Authentication for Beginners
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Online Demo
 
-Currently, two official plugins are available:
+https://djreactjwt-1-n3165612.deta.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## API Endpoint
 
-## Expanding the ESLint configuration
+https://djreactjwt-1-n3165612.deta.app/api/
+
+## Scenario
+
+- `/dashboard` is a protected route.
+- if you are logged in, you have to see the avatar with profile menu in navbar.
+- if you are not logged in and try to access to `/dashbaord`, it will show `login page`
+- The user logged can't access to auth pages.
+
+## What you will learn
+
+- How to structure a react application
+- How to architect public and protected routes with authenction.
+- How to use react-router-dom
+
+## This project is started from create-vite with react and swc
+
+### Expanding the ESLint configuration
 
 If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 

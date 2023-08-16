@@ -1,50 +1,118 @@
 # JWT Authentication using Django and rest framework
 
-## Demo API Endpoint
+## API Endpoint
 
-- `https://djrestauthjwt-1-e9256495.deta.app`
+https://djreactjwt-1-n3165612.deta.app/api/
 
 ## API urls available
 
-- `/auth/register/`
+### `/auth/register/` (POST)
 
-  ```
-  register payload
+- payload
 
-  {
-    "first_name": "firstname",
-    "last_name": "lastname",
-    "password": "password",
-    "username": "emailaddress"
-  }
-  ```
+```
+{
+  "first_name": "",
+  "last_name": "",
+  "username": ""
+  "email": "",
+  "password": ""
+}
+```
 
-- `/auth/login`
+### `/auth/login/` (POST)
 
-  ```
-  login request payload
-  {
-    "username": "emailaddress",
-    "password": "password"
-  }
+- payload
 
-  login response
+```
+{
+  "email": "",
+  "password": ""
+}
+```
+
+- response
+
+```
+{
+  "acces": "access token",
+  "refresh": "refresh token",
+  "first_name": "",
+  "last_name": "",
+  "username": ""
+  "email": ""
+}
+```
+
+## `/token/refresh/` (POST)
+
+- header
+
+```
+Authorization: Bearer <access_token_here>
+```
+
+- payload
+
+```
+{
+  "refresh": "emailaddress",
+}
+```
+
+- response
+
+```
+{
+  "acces": "access token",
+}
+```
+
+### `/auth/logout/` (POST)
+
+- header
+
+```
+Authorization: Bearer <access_token_here>
+```
+
+- payload
+
+```
+{
+  "username": "emailaddress",
+  "password": "password"
+}
+```
+
+- response
+
+```
   {
     "acces": "access token",
     "refresh": "refresh token"
   }
-  ```
+```
 
-- `users/1/` here, the number 1 is the id, a primary key
+### `/users/me/` (GET)
 
-  ```
-  request header
-  Authorization: Bearer <access_token_here>
+- header
 
-  response
-  {
-    "username": "email address",
-    "first_name": "firstname",
-    "last_name": "lastname"
-  }
-  ```
+```
+Authorization: Bearer <access_token_here>
+```
+
+- response
+
+```
+{
+  "username": "",
+  "first_name": "",
+  "last_name": ""
+  "email": "
+}
+```
+
+### Online Demo
+
+https://djreactjwt-1-n3165612.deta.app

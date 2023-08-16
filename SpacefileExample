@@ -6,7 +6,7 @@ micros:
     src: ./backend
     engine: python3.9
     path: api
-    # public: true
+    public: true
     # commands:
     #   - python3 manage.py migrate
     run: gunicorn django_rest_jwt.wsgi
