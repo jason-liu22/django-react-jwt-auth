@@ -1,0 +1,46 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+
+v: 0
+micros:
+  - name: backend-api
+    src: ./backend
+    engine: python3.9
+    path: api
+    # public: true
+    # commands:
+    #   - python3 manage.py migrate
+    run: gunicorn django_rest_jwt.wsgi
+    dev: python manage.py runserver
+    presets:
+      env:
+        - name: ENVIRONMENT
+          default: production
+        - name: ALLOWED_HOSTS
+          default: ...deta.app.domain
+        - name: CORS_ALLOWED_ORIGINS
+          default: ...deta.app
+        - name: SQL_ENGINE
+          default: django.db.backends.postgresql
+        - name: SQL_PORT
+          default: "5432"
+        - name: SQL_DATABASE
+          default: postgres
+        - name: SQL_USER
+          default: postgres
+        - name: SQL_PASSWORD
+          default: postgres
+        - name: SQL_HOST
+          default: dbhost
+
+  - name: frontend-react
+    src: ./frontend
+    engine: static
+    primary: true
+    commands:
+      - VITE_APP_API_BASE_URL=...deta.app/api npm run build
+    serve: dist
+    dev: npm run dev
+    # presets:
+    #   env:
+    #     - name: VITE_APP_API_BASE_URL
+    #       default: ...deta.app/api

@@ -60,6 +60,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "django_rest_jwt.urls"
+ALLOWED_HOSTS = []
+if os.environ.get("ALLOWED_HOSTS"):
+    ALLOWED_HOSTS.append(os.environ.get("ALLOWED_HOSTS", "*"))
 
 TEMPLATES = [
     {
@@ -138,10 +141,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 CORS_ALLOWED_ORIGINS = [
-    "https://djrestauthjwt-1-e9256495.deta.app",
     "http://localhost:5173",
     "http://localhost:3000",
 ]
+if os.environ.get("CORS_ALLOWED_ORIGINS"):
+    CORS_ALLOWED_ORIGINS.append(os.environ.get("CORS_ALLOWED_ORIGINS"))
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
