@@ -1,3 +1,10 @@
+# React Django JWT Authentication Template
+
+## Why did I develop this project?
+
+I am asked how to structure a react app and how to architect authentication, public, protected routes in react app from beginner.
+So I decided to build and publish a sample to help beginners understand them
+
 ## Demo
 
 https://djreactjwt-1-n3165612.deta.app
